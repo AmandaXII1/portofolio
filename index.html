@@ -1,0 +1,992 @@
+<!doctype html>
+<html lang="id" class="scroll-smooth">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NailGlam - Premium Nail Art Salon</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .nail-pattern {
+            background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0);
+            background-size: 20px 20px;
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .dark .bg-white { background-color: #1f2937; }
+        .dark .text-gray-900 { color: #f9fafb; }
+        .dark .text-gray-600 { color: #d1d5db; }
+        .dark .text-gray-700 { color: #e5e7eb; }
+        .dark .bg-gray-50 { background-color: #374151; }
+        .dark .bg-gray-100 { background-color: #4b5563; }
+        .dark .border-gray-200 { border-color: #4b5563; }
+        
+        /* Fix text colors for better contrast in both modes */
+        .text-gray-900 { color: #1f2937; }
+        .text-gray-700 { color: #374151; }
+        .dark .text-gray-100 { color: #f3f4f6; }
+        .dark .text-gray-200 { color: #e5e7eb; }
+        
+        .testimonial-card {
+            transition: transform 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .service-card {
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: scale(1.05);
+        }
+        
+        .chat-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+ </head>
+ <body class="font-sans transition-colors duration-300"><!-- Navigation -->
+  <nav class="fixed top-0 w-full z-50 glass-effect transition-all duration-300" id="navbar">
+   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+     <div class="flex items-center">
+      <div class="text-2xl font-bold text-white" id="nav-salon-name">
+       NailGlam
+      </div>
+     </div>
+     <div class="hidden md:block">
+      <div class="ml-10 flex items-baseline space-x-4"><a href="#home" class="text-white hover:text-pink-300 px-3 py-2 transition-colors" data-lang-key="nav-home">Beranda</a> <a href="#services" class="text-white hover:text-pink-300 px-3 py-2 transition-colors" data-lang-key="nav-services">Layanan</a> <a href="#gallery" class="text-white hover:text-pink-300 px-3 py-2 transition-colors" data-lang-key="nav-gallery">Galeri</a> <a href="#testimonials" class="text-white hover:text-pink-300 px-3 py-2 transition-colors" data-lang-key="nav-testimonials">Testimoni</a> <a href="#contact" class="text-white hover:text-pink-300 px-3 py-2 transition-colors" data-lang-key="nav-contact">Kontak</a>
+      </div>
+     </div>
+     <div class="flex items-center space-x-4"><!-- Language Switcher --> <select id="language-switcher" class="bg-transparent text-white border border-white/30 rounded px-2 py-1 text-sm"> <option value="id" class="text-gray-900">🇮🇩 ID</option> <option value="en" class="text-gray-900">🇺🇸 EN</option> </select> <!-- Dark Mode Toggle --> <button id="dark-mode-toggle" class="text-white hover:text-pink-300 transition-colors"> <i class="fas fa-moon" id="dark-mode-icon"></i> </button> <!-- Mobile Menu Button --> <button id="mobile-menu-btn" class="md:hidden text-white"> <i class="fas fa-bars"></i> </button>
+     </div>
+    </div>
+   </div><!-- Mobile Menu -->
+   <div id="mobile-menu" class="md:hidden hidden bg-black/90 backdrop-blur-lg">
+    <div class="px-2 pt-2 pb-3 space-y-1"><a href="#home" class="text-white block px-3 py-2" data-lang-key="nav-home">Beranda</a> <a href="#services" class="text-white block px-3 py-2" data-lang-key="nav-services">Layanan</a> <a href="#gallery" class="text-white block px-3 py-2" data-lang-key="nav-gallery">Galeri</a> <a href="#testimonials" class="text-white block px-3 py-2" data-lang-key="nav-testimonials">Testimoni</a> <a href="#contact" class="text-white block px-3 py-2" data-lang-key="nav-contact">Kontak</a>
+    </div>
+   </div>
+  </nav><!-- Hero Section -->
+  <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden" style="background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 50%, #ddd6fe 100%);"><!-- Animated Background Effects -->
+   <div class="absolute inset-0 overflow-hidden"><!-- Floating Circles -->
+    <div class="absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full animate-pulse"></div>
+    <div class="absolute top-40 right-20 w-24 h-24 bg-pink-300/20 rounded-full floating" style="animation-delay: -1s;"></div>
+    <div class="absolute bottom-32 left-1/4 w-40 h-40 bg-purple-300/15 rounded-full floating" style="animation-delay: -2s;"></div>
+    <div class="absolute top-1/3 right-1/3 w-20 h-20 bg-white/15 rounded-full animate-bounce" style="animation-delay: -0.5s;"></div>
+    <div class="absolute bottom-20 right-10 w-28 h-28 bg-pink-200/20 rounded-full floating" style="animation-delay: -1.5s;"></div><!-- Gradient Orbs -->
+    <div class="absolute top-1/4 left-1/3 w-64 h-64 bg-gradient-to-r from-pink-300/20 to-purple-300/20 rounded-full blur-3xl floating" style="animation-delay: -3s;"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-200/15 to-pink-200/15 rounded-full blur-3xl floating" style="animation-delay: -2.5s;"></div><!-- Sparkle Effects -->
+    <div class="absolute top-16 left-1/2 w-2 h-2 bg-white rounded-full animate-ping" style="animation-delay: -1s;"></div>
+    <div class="absolute top-1/2 left-20 w-1 h-1 bg-pink-300 rounded-full animate-ping" style="animation-delay: -2s;"></div>
+    <div class="absolute bottom-1/3 right-1/2 w-2 h-2 bg-purple-300 rounded-full animate-ping" style="animation-delay: -0.5s;"></div>
+    <div class="absolute top-3/4 left-3/4 w-1 h-1 bg-white rounded-full animate-ping" style="animation-delay: -1.5s;"></div>
+   </div>
+   <div class="absolute inset-0 bg-black/5"></div>
+   <div class="relative z-10 text-center px-4 max-w-4xl mx-auto" style="color: #ec4899;">
+    <div class="floating">
+     <h1 class="text-5xl md:text-7xl font-bold mb-6" id="hero-title" data-lang-key="hero-title">Transform Your Nails Into Art</h1>
+     <p class="text-xl md:text-2xl mb-8" id="hero-subtitle" data-lang-key="hero-subtitle" style="color: #ec4899;">Professional nail art services with premium quality</p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"><button onclick="scrollToSection('services')" class="bg-pink-500 hover:bg-pink-600 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all transform hover:scale-105" data-lang-key="cta-services"> Lihat Layanan </button> <button onclick="scrollToSection('contact')" class="border-2 border-white text-white hover:bg-white hover:text-gray-900 px-8 py-4 rounded-full text-lg font-semibold transition-all" data-lang-key="cta-booking"> Book Sekarang </button>
+    </div><!-- Statistics Counter -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+     <div class="text-center">
+      <div class="text-4xl font-bold mb-2" id="counter-clients">
+       500+
+      </div>
+      <div class="text-lg opacity-80" data-lang-key="stat-clients">
+       Klien Puas
+      </div>
+     </div>
+     <div class="text-center">
+      <div class="text-4xl font-bold mb-2" id="counter-designs">
+       1000+
+      </div>
+      <div class="text-lg opacity-80" data-lang-key="stat-designs">
+       Desain Selesai
+      </div>
+     </div>
+     <div class="text-center">
+      <div class="text-4xl font-bold mb-2" id="counter-experience">
+       5+
+      </div>
+      <div class="text-lg opacity-80" data-lang-key="stat-experience">
+       Tahun Pengalaman
+      </div>
+     </div>
+    </div>
+   </div><!-- Scroll Indicator -->
+   <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce"><i class="fas fa-chevron-down text-2xl"></i>
+   </div>
+  </section><!-- Services Section -->
+  <section id="services" class="py-20 relative overflow-hidden transition-colors duration-300" style="background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 50%, #ddd6fe 100%);"><!-- Background Effects for Services -->
+   <div class="absolute inset-0 overflow-hidden"><!-- Floating shapes -->
+    <div class="absolute top-10 left-10 w-20 h-20 bg-pink-200/20 rounded-full floating" style="animation-delay: -1s;"></div>
+    <div class="absolute top-32 right-20 w-16 h-16 bg-purple-200/25 rounded-full floating" style="animation-delay: -2s;"></div>
+    <div class="absolute bottom-20 left-1/4 w-24 h-24 bg-blue-200/20 rounded-full floating" style="animation-delay: -0.5s;"></div>
+    <div class="absolute top-1/2 right-10 w-12 h-12 bg-pink-300/30 rounded-full animate-pulse"></div><!-- Gradient orbs -->
+    <div class="absolute top-1/4 right-1/3 w-40 h-40 bg-gradient-to-r from-pink-200/10 to-purple-200/10 rounded-full blur-2xl floating" style="animation-delay: -3s;"></div>
+    <div class="absolute bottom-1/3 left-1/4 w-32 h-32 bg-gradient-to-r from-blue-200/15 to-cyan-200/15 rounded-full blur-2xl floating" style="animation-delay: -1.5s;"></div><!-- Sparkles -->
+    <div class="absolute top-20 right-1/2 w-1 h-1 bg-pink-400 rounded-full animate-ping" style="animation-delay: -1s;"></div>
+    <div class="absolute bottom-40 left-1/3 w-2 h-2 bg-purple-400 rounded-full animate-ping" style="animation-delay: -2s;"></div>
+   </div>
+   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="text-center mb-16">
+     <h2 class="text-4xl font-bold text-gray-800 dark:text-white mb-4" data-lang-key="services-title">Layanan Kami</h2>
+     <p class="text-xl" style="color: #ec4899;" data-lang-key="services-subtitle">Berbagai layanan nail art profesional untuk kebutuhan Anda</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+     <div class="service-card bg-gradient-to-br from-pink-100 to-purple-100 dark:from-pink-900 dark:to-purple-900 p-6 rounded-xl shadow-lg">
+      <div class="text-4xl mb-4">
+       💅
+      </div>
+      <h3 class="text-xl font-semibold mb-3 text-gray-800 dark:text-white" data-lang-key="service-manicure">Manicure</h3>
+      <p class="text-gray-700 dark:text-gray-300 mb-4" data-lang-key="service-manicure-desc">Perawatan kuku tangan profesional dengan hasil sempurna</p>
+      <div class="text-2xl font-bold text-pink-600 dark:text-pink-400">
+       Rp 150K
+      </div>
+     </div>
+     <div class="service-card bg-gradient-to-br from-blue-100 to-cyan-100 dark:from-blue-900 dark:to-cyan-900 p-6 rounded-xl shadow-lg">
+      <div class="text-4xl mb-4">
+       🦶
+      </div>
+      <h3 class="text-xl font-semibold mb-3 text-gray-800 dark:text-white" data-lang-key="service-pedicure">Pedicure</h3>
+      <p class="text-gray-700 dark:text-gray-300 mb-4" data-lang-key="service-pedicure-desc">Perawatan kuku kaki dengan relaksasi maksimal</p>
+      <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">
+       Rp 200K
+      </div>
+     </div>
+     <div class="service-card bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900 dark:to-pink-900 p-6 rounded-xl shadow-lg">
+      <div class="text-4xl mb-4">
+       🎨
+      </div>
+      <h3 class="text-xl font-semibold mb-3 text-gray-800 dark:text-white" data-lang-key="service-nailart">Nail Art</h3>
+      <p class="text-gray-700 dark:text-gray-300 mb-4" data-lang-key="service-nailart-desc">Desain kuku artistik sesuai keinginan Anda</p>
+      <div class="text-2xl font-bold text-purple-600 dark:text-purple-400">
+       Rp 250K
+      </div>
+     </div>
+     <div class="service-card bg-gradient-to-br from-green-100 to-teal-100 dark:from-green-900 dark:to-teal-900 p-6 rounded-xl shadow-lg">
+      <div class="text-4xl mb-4">
+       ✨
+      </div>
+      <h3 class="text-xl font-semibold mb-3 text-gray-800 dark:text-white" data-lang-key="service-spa">Nail Spa</h3>
+      <p class="text-gray-700 dark:text-gray-300 mb-4" data-lang-key="service-spa-desc">Treatment spa khusus untuk kesehatan kuku</p>
+      <div class="text-2xl font-bold text-green-600 dark:text-green-400">
+       Rp 300K
+      </div>
+     </div>
+    </div>
+   </div>
+  </section><!-- Gallery Section -->
+  <section id="gallery" class="py-20 relative overflow-hidden transition-colors duration-300" style="background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 50%, #ddd6fe 100%);"><!-- Background Effects for Gallery -->
+   <div class="absolute inset-0 overflow-hidden"><!-- Artistic shapes -->
+    <div class="absolute top-16 left-16 w-28 h-28 bg-gradient-to-br from-pink-300/15 to-purple-300/15 rounded-full floating" style="animation-delay: -2s;"></div>
+    <div class="absolute top-40 right-12 w-20 h-20 bg-gradient-to-br from-blue-300/20 to-cyan-300/20 rounded-full floating" style="animation-delay: -1s;"></div>
+    <div class="absolute bottom-32 left-1/3 w-36 h-36 bg-gradient-to-br from-purple-200/10 to-pink-200/10 rounded-full floating" style="animation-delay: -3s;"></div>
+    <div class="absolute top-1/3 right-1/4 w-14 h-14 bg-pink-400/25 rounded-full animate-bounce" style="animation-delay: -0.5s;"></div><!-- Paint brush strokes effect -->
+    <div class="absolute top-20 left-1/2 w-2 h-16 bg-gradient-to-b from-pink-300/30 to-transparent rounded-full transform rotate-12 floating"></div>
+    <div class="absolute bottom-24 right-1/3 w-2 h-20 bg-gradient-to-b from-purple-300/25 to-transparent rounded-full transform -rotate-12 floating" style="animation-delay: -1.5s;"></div><!-- Glitter effects -->
+    <div class="absolute top-1/4 left-20 w-1 h-1 bg-pink-500 rounded-full animate-ping" style="animation-delay: -0.8s;"></div>
+    <div class="absolute top-3/4 right-20 w-2 h-2 bg-purple-500 rounded-full animate-ping" style="animation-delay: -1.2s;"></div>
+    <div class="absolute bottom-1/4 left-1/2 w-1 h-1 bg-blue-500 rounded-full animate-ping" style="animation-delay: -2.5s;"></div><!-- Large background orb -->
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-pink-100/5 to-purple-100/5 rounded-full blur-3xl floating" style="animation-delay: -4s;"></div>
+   </div>
+   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="text-center mb-16">
+     <h2 class="text-4xl font-bold text-gray-800 dark:text-white mb-4" data-lang-key="gallery-title">Galeri Karya</h2>
+     <p class="text-xl" style="color: #ec4899;" data-lang-key="gallery-subtitle">Koleksi desain nail art terbaik kami</p>
+    </div><!-- Filter Buttons -->
+    <div class="flex flex-wrap justify-center gap-4 mb-12"><button onclick="filterGallery('all')" class="filter-btn active bg-pink-500 text-white px-6 py-2 rounded-full transition-all" data-lang-key="filter-all">Semua</button> <button onclick="filterGallery('cute')" class="filter-btn bg-pink-100 dark:bg-pink-800 text-pink-700 dark:text-pink-200 px-6 py-2 rounded-full transition-all" data-lang-key="filter-cute">Cute</button> <button onclick="filterGallery('pastel')" class="filter-btn bg-pink-100 dark:bg-pink-800 text-pink-700 dark:text-pink-200 px-6 py-2 rounded-full transition-all" data-lang-key="filter-pastel">Pastel</button> <button onclick="filterGallery('premium')" class="filter-btn bg-pink-100 dark:bg-pink-800 text-pink-700 dark:text-pink-200 px-6 py-2 rounded-full transition-all" data-lang-key="filter-premium">Premium</button> <button onclick="filterGallery('simple')" class="filter-btn bg-pink-100 dark:bg-pink-800 text-pink-700 dark:text-pink-200 px-6 py-2 rounded-full transition-all" data-lang-key="filter-simple">Simple</button>
+    </div><!-- Gallery Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="gallery-grid"><!-- Gallery items will be populated by JavaScript -->
+    </div>
+   </div>
+  </section><!-- Testimonials Section -->
+  <section id="testimonials" class="py-20 transition-colors duration-300" style="background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 50%, #ddd6fe 100%);">
+   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+     <h2 class="text-4xl font-bold text-gray-800 dark:text-white mb-4" data-lang-key="testimonials-title">Testimoni Pelanggan</h2>
+     <p class="text-xl" style="color: #ec4899;" data-lang-key="testimonials-subtitle">Apa kata mereka tentang layanan kami</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="testimonials-container"><!-- Testimonials will be populated by JavaScript -->
+    </div>
+   </div>
+  </section><!-- Contact & Booking Section -->
+  <section id="contact" class="py-20 transition-colors duration-300" style="background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 50%, #ddd6fe 100%);">
+   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+     <h2 class="text-4xl font-bold text-gray-800 dark:text-white mb-4" data-lang-key="contact-title">Hubungi Kami</h2>
+     <p class="text-xl" style="color: #ec4899;" data-lang-key="contact-subtitle">Siap melayani kebutuhan nail art Anda</p>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12"><!-- Contact Info -->
+     <div>
+      <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6" data-lang-key="contact-info-title">Informasi Kontak</h3>
+      <div class="space-y-4">
+       <div class="flex items-center"><i class="fas fa-map-marker-alt text-xl w-8" style="color: #ec4899;"></i> <span id="contact-address" style="color: #ec4899;">123 Beauty Street, Jakarta</span>
+       </div>
+       <div class="flex items-center"><i class="fas fa-phone text-xl w-8" style="color: #ec4899;"></i> <span id="contact-phone" style="color: #ec4899;">+62 812-3456-7890</span>
+       </div>
+       <div class="flex items-center"><i class="fas fa-envelope text-xl w-8" style="color: #ec4899;"></i> <span id="contact-email" style="color: #ec4899;">hello@nailglam.com</span>
+       </div>
+       <div class="flex items-center"><i class="fas fa-clock text-xl w-8" style="color: #ec4899;"></i> <span data-lang-key="contact-hours" style="color: #ec4899;">Senin - Minggu: 09:00 - 21:00</span>
+       </div>
+      </div><!-- Social Media -->
+      <div class="mt-8">
+       <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-4" data-lang-key="social-title">Ikuti Kami</h4>
+       <div class="flex space-x-4"><a href="#" class="text-pink-500 hover:text-pink-600 text-2xl transition-colors"><i class="fab fa-instagram"></i></a> <a href="#" class="text-pink-500 hover:text-pink-600 text-2xl transition-colors"><i class="fab fa-tiktok"></i></a> <a href="#" class="text-pink-500 hover:text-pink-600 text-2xl transition-colors"><i class="fab fa-pinterest"></i></a> <a href="#" class="text-pink-500 hover:text-pink-600 text-2xl transition-colors"><i class="fab fa-facebook"></i></a>
+       </div>
+      </div><!-- Map -->
+      <div class="mt-8">
+       <div class="bg-gray-200 dark:bg-gray-700 h-64 rounded-lg flex items-center justify-center">
+        <div class="text-center text-gray-500 dark:text-gray-400"><i class="fas fa-map-marked-alt text-4xl mb-2"></i>
+         <p data-lang-key="map-placeholder">Peta Lokasi Salon</p>
+        </div>
+       </div>
+      </div>
+     </div><!-- Booking Form -->
+     <div>
+      <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6" data-lang-key="booking-title">Reservasi Online</h3>
+      <form id="booking-form" class="space-y-6">
+       <div><label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" data-lang-key="form-name">Nama Lengkap</label> <input type="text" id="booking-name" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors">
+       </div>
+       <div><label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" data-lang-key="form-email">Email</label> <input type="email" id="booking-email" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors">
+       </div>
+       <div><label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" data-lang-key="form-phone">Nomor Telepon</label> <input type="tel" id="booking-phone" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors">
+       </div>
+       <div><label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" data-lang-key="form-service">Pilih Layanan</label> <select id="booking-service" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors"> <option value="" data-lang-key="form-service-placeholder">Pilih layanan...</option> <option value="manicure" data-lang-key="service-manicure">Manicure</option> <option value="pedicure" data-lang-key="service-pedicure">Pedicure</option> <option value="nailart" data-lang-key="service-nailart">Nail Art</option> <option value="spa" data-lang-key="service-spa">Nail Spa</option> </select>
+       </div>
+       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div><label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" data-lang-key="form-date">Tanggal</label> <input type="date" id="booking-date" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors">
+        </div>
+        <div><label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" data-lang-key="form-time">Waktu</label> <select id="booking-time" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors"> <option value="" data-lang-key="form-time-placeholder">Pilih waktu...</option> <option value="09:00">09:00</option> <option value="10:00">10:00</option> <option value="11:00">11:00</option> <option value="13:00">13:00</option> <option value="14:00">14:00</option> <option value="15:00">15:00</option> <option value="16:00">16:00</option> <option value="17:00">17:00</option> <option value="18:00">18:00</option> <option value="19:00">19:00</option> <option value="20:00">20:00</option> </select>
+        </div>
+       </div>
+       <div><label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" data-lang-key="form-message">Pesan Tambahan</label> <textarea id="booking-message" rows="4" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors" placeholder="Ceritakan desain yang Anda inginkan..."></textarea>
+       </div><button type="submit" id="booking-submit" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-semibold py-3 px-6 rounded-lg transition-all transform hover:scale-105" data-lang-key="form-submit"> Book Sekarang </button>
+      </form>
+     </div>
+    </div>
+   </div>
+  </section><!-- Footer -->
+  <footer class="bg-gray-900 text-white py-12">
+   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+     <div>
+      <h3 class="text-2xl font-bold mb-4" id="footer-salon-name">NailGlam</h3>
+      <p class="text-gray-400 mb-4" data-lang-key="footer-description">Salon nail art terpercaya dengan layanan profesional dan hasil berkualitas tinggi.</p>
+      <div class="flex space-x-4"><a href="#" class="text-gray-400 hover:text-pink-400 transition-colors"><i class="fab fa-instagram"></i></a> <a href="#" class="text-gray-400 hover:text-pink-400 transition-colors"><i class="fab fa-tiktok"></i></a> <a href="#" class="text-gray-400 hover:text-pink-400 transition-colors"><i class="fab fa-pinterest"></i></a>
+      </div>
+     </div>
+     <div>
+      <h4 class="text-lg font-semibold mb-4" data-lang-key="footer-services">Layanan</h4>
+      <ul class="space-y-2 text-gray-400">
+       <li><a href="#" class="hover:text-pink-400 transition-colors" data-lang-key="service-manicure">Manicure</a></li>
+       <li><a href="#" class="hover:text-pink-400 transition-colors" data-lang-key="service-pedicure">Pedicure</a></li>
+       <li><a href="#" class="hover:text-pink-400 transition-colors" data-lang-key="service-nailart">Nail Art</a></li>
+       <li><a href="#" class="hover:text-pink-400 transition-colors" data-lang-key="service-spa">Nail Spa</a></li>
+      </ul>
+     </div>
+     <div>
+      <h4 class="text-lg font-semibold mb-4" data-lang-key="footer-info">Informasi</h4>
+      <ul class="space-y-2 text-gray-400">
+       <li><a href="#" class="hover:text-pink-400 transition-colors" data-lang-key="footer-about">Tentang Kami</a></li>
+       <li><a href="#" class="hover:text-pink-400 transition-colors" data-lang-key="footer-blog">Blog</a></li>
+       <li><a href="#" class="hover:text-pink-400 transition-colors" data-lang-key="footer-faq">FAQ</a></li>
+       <li><a href="#" class="hover:text-pink-400 transition-colors" data-lang-key="footer-privacy">Kebijakan Privasi</a></li>
+      </ul>
+     </div>
+     <div>
+      <h4 class="text-lg font-semibold mb-4" data-lang-key="footer-contact">Kontak</h4>
+      <div class="space-y-2 text-gray-400">
+       <p id="footer-address">123 Beauty Street, Jakarta</p>
+       <p id="footer-phone">+62 812-3456-7890</p>
+       <p id="footer-email">hello@nailglam.com</p>
+      </div>
+     </div>
+    </div>
+    <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+     <p>© 2024 <span id="footer-copyright-name">NailGlam</span>. <span data-lang-key="footer-rights">All rights reserved.</span></p>
+    </div>
+   </div>
+  </footer><!-- Chat Widget -->
+  <div class="chat-widget"><button id="chat-toggle" class="bg-pink-500 hover:bg-pink-600 text-white p-4 rounded-full shadow-lg transition-all transform hover:scale-110"> <i class="fas fa-comments text-xl"></i> </button>
+   <div id="chat-window" class="hidden absolute bottom-16 right-0 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700">
+    <div class="bg-pink-500 text-white p-4 rounded-t-lg">
+     <h4 class="font-semibold" data-lang-key="chat-title">NailGlam Assistant</h4>
+     <p class="text-sm opacity-90" data-lang-key="chat-subtitle">Ada yang bisa kami bantu?</p>
+    </div>
+    <div class="p-4 h-64 overflow-y-auto" id="chat-messages">
+     <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded-lg mb-3">
+      <p class="text-sm text-gray-700 dark:text-gray-300" data-lang-key="chat-welcome">Halo! Selamat datang di NailGlam. Bagaimana kami bisa membantu Anda hari ini?</p>
+     </div>
+    </div>
+    <div class="p-4 border-t border-gray-200 dark:border-gray-700">
+     <div class="flex space-x-2"><input type="text" id="chat-input" placeholder="Ketik pesan..." class="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm dark:bg-gray-700 dark:text-white"> <button id="chat-send" class="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-lg text-sm transition-colors"> <i class="fas fa-paper-plane"></i> </button>
+     </div>
+    </div>
+   </div>
+  </div><!-- Loading Overlay -->
+  <div id="loading-overlay" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+   <div class="bg-white dark:bg-gray-800 p-6 rounded-lg text-center">
+    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500 mx-auto mb-4"></div>
+    <p class="text-gray-700 dark:text-gray-300" data-lang-key="loading">Memproses...</p>
+   </div>
+  </div>
+  <script>
+        // Configuration
+        const defaultConfig = {
+            salon_name: "NailGlam",
+            hero_title: "Transform Your Nails Into Art",
+            hero_subtitle: "Professional nail art services with premium quality",
+            salon_address: "123 Beauty Street, Jakarta",
+            salon_phone: "+62 812-3456-7890",
+            salon_email: "hello@nailglam.com",
+            background_color: "#667eea",
+            surface_color: "#ffffff",
+            text_color: "#1f2937",
+            primary_action_color: "#ec4899",
+            secondary_action_color: "#8b5cf6"
+        };
+
+        let currentLanguage = 'id';
+        let currentRecordCount = 0;
+
+        // Language translations
+        const translations = {
+            id: {
+                'nav-home': 'Beranda',
+                'nav-services': 'Layanan',
+                'nav-gallery': 'Galeri',
+                'nav-testimonials': 'Testimoni',
+                'nav-contact': 'Kontak',
+                'hero-title': 'Transform Your Nails Into Art',
+                'hero-subtitle': 'Professional nail art services with premium quality',
+                'cta-services': 'Lihat Layanan',
+                'cta-booking': 'Book Sekarang',
+                'stat-clients': 'Klien Puas',
+                'stat-designs': 'Desain Selesai',
+                'stat-experience': 'Tahun Pengalaman',
+                'services-title': 'Layanan Kami',
+                'services-subtitle': 'Berbagai layanan nail art profesional untuk kebutuhan Anda',
+                'service-manicure': 'Manicure',
+                'service-manicure-desc': 'Perawatan kuku tangan profesional dengan hasil sempurna',
+                'service-pedicure': 'Pedicure',
+                'service-pedicure-desc': 'Perawatan kuku kaki dengan relaksasi maksimal',
+                'service-nailart': 'Nail Art',
+                'service-nailart-desc': 'Desain kuku artistik sesuai keinginan Anda',
+                'service-spa': 'Nail Spa',
+                'service-spa-desc': 'Treatment spa khusus untuk kesehatan kuku',
+                'gallery-title': 'Galeri Karya',
+                'gallery-subtitle': 'Koleksi desain nail art terbaik kami',
+                'filter-all': 'Semua',
+                'filter-cute': 'Cute',
+                'filter-pastel': 'Pastel',
+                'filter-premium': 'Premium',
+                'filter-simple': 'Simple',
+                'testimonials-title': 'Testimoni Pelanggan',
+                'testimonials-subtitle': 'Apa kata mereka tentang layanan kami',
+                'contact-title': 'Hubungi Kami',
+                'contact-subtitle': 'Siap melayani kebutuhan nail art Anda',
+                'contact-info-title': 'Informasi Kontak',
+                'contact-hours': 'Senin - Minggu: 09:00 - 21:00',
+                'social-title': 'Ikuti Kami',
+                'map-placeholder': 'Peta Lokasi Salon',
+                'booking-title': 'Reservasi Online',
+                'form-name': 'Nama Lengkap',
+                'form-email': 'Email',
+                'form-phone': 'Nomor Telepon',
+                'form-service': 'Pilih Layanan',
+                'form-service-placeholder': 'Pilih layanan...',
+                'form-date': 'Tanggal',
+                'form-time': 'Waktu',
+                'form-time-placeholder': 'Pilih waktu...',
+                'form-message': 'Pesan Tambahan',
+                'form-submit': 'Book Sekarang',
+                'footer-description': 'Salon nail art terpercaya dengan layanan profesional dan hasil berkualitas tinggi.',
+                'footer-services': 'Layanan',
+                'footer-info': 'Informasi',
+                'footer-about': 'Tentang Kami',
+                'footer-blog': 'Blog',
+                'footer-faq': 'FAQ',
+                'footer-privacy': 'Kebijakan Privasi',
+                'footer-contact': 'Kontak',
+                'footer-rights': 'All rights reserved.',
+                'chat-title': 'NailGlam Assistant',
+                'chat-subtitle': 'Ada yang bisa kami bantu?',
+                'chat-welcome': 'Halo! Selamat datang di NailGlam. Bagaimana kami bisa membantu Anda hari ini?',
+                'loading': 'Memproses...',
+                'booking-success': 'Reservasi berhasil! Kami akan menghubungi Anda segera.',
+                'booking-error': 'Terjadi kesalahan. Silakan coba lagi.',
+                'feedback-success': 'Terima kasih atas feedback Anda!',
+                'feedback-error': 'Gagal mengirim feedback. Silakan coba lagi.'
+            },
+            en: {
+                'nav-home': 'Home',
+                'nav-services': 'Services',
+                'nav-gallery': 'Gallery',
+                'nav-testimonials': 'Testimonials',
+                'nav-contact': 'Contact',
+                'hero-title': 'Transform Your Nails Into Art',
+                'hero-subtitle': 'Professional nail art services with premium quality',
+                'cta-services': 'View Services',
+                'cta-booking': 'Book Now',
+                'stat-clients': 'Happy Clients',
+                'stat-designs': 'Designs Completed',
+                'stat-experience': 'Years Experience',
+                'services-title': 'Our Services',
+                'services-subtitle': 'Various professional nail art services for your needs',
+                'service-manicure': 'Manicure',
+                'service-manicure-desc': 'Professional hand nail care with perfect results',
+                'service-pedicure': 'Pedicure',
+                'service-pedicure-desc': 'Foot nail care with maximum relaxation',
+                'service-nailart': 'Nail Art',
+                'service-nailart-desc': 'Artistic nail designs according to your wishes',
+                'service-spa': 'Nail Spa',
+                'service-spa-desc': 'Special spa treatment for nail health',
+                'gallery-title': 'Our Gallery',
+                'gallery-subtitle': 'Collection of our best nail art designs',
+                'filter-all': 'All',
+                'filter-cute': 'Cute',
+                'filter-pastel': 'Pastel',
+                'filter-premium': 'Premium',
+                'filter-simple': 'Simple',
+                'testimonials-title': 'Customer Testimonials',
+                'testimonials-subtitle': 'What they say about our services',
+                'contact-title': 'Contact Us',
+                'contact-subtitle': 'Ready to serve your nail art needs',
+                'contact-info-title': 'Contact Information',
+                'contact-hours': 'Monday - Sunday: 09:00 - 21:00',
+                'social-title': 'Follow Us',
+                'map-placeholder': 'Salon Location Map',
+                'booking-title': 'Online Reservation',
+                'form-name': 'Full Name',
+                'form-email': 'Email',
+                'form-phone': 'Phone Number',
+                'form-service': 'Choose Service',
+                'form-service-placeholder': 'Select service...',
+                'form-date': 'Date',
+                'form-time': 'Time',
+                'form-time-placeholder': 'Select time...',
+                'form-message': 'Additional Message',
+                'form-submit': 'Book Now',
+                'footer-description': 'Trusted nail art salon with professional services and high-quality results.',
+                'footer-services': 'Services',
+                'footer-info': 'Information',
+                'footer-about': 'About Us',
+                'footer-blog': 'Blog',
+                'footer-faq': 'FAQ',
+                'footer-privacy': 'Privacy Policy',
+                'footer-contact': 'Contact',
+                'footer-rights': 'All rights reserved.',
+                'chat-title': 'NailGlam Assistant',
+                'chat-subtitle': 'How can we help you?',
+                'chat-welcome': 'Hello! Welcome to NailGlam. How can we help you today?',
+                'loading': 'Processing...',
+                'booking-success': 'Booking successful! We will contact you soon.',
+                'booking-error': 'An error occurred. Please try again.',
+                'feedback-success': 'Thank you for your feedback!',
+                'feedback-error': 'Failed to send feedback. Please try again.'
+            }
+        };
+
+        // Gallery data
+        const galleryData = [
+            { category: 'cute', image: '🌸', title: 'Cherry Blossom', description: 'Cute pink cherry blossom design' },
+            { category: 'pastel', image: '🦄', title: 'Unicorn Dreams', description: 'Pastel rainbow unicorn theme' },
+            { category: 'premium', image: '💎', title: 'Diamond Luxury', description: 'Premium crystal and gold design' },
+            { category: 'simple', image: '🤍', title: 'Minimalist White', description: 'Clean and simple white design' },
+            { category: 'cute', image: '🐱', title: 'Kitty Love', description: 'Adorable cat-themed nails' },
+            { category: 'pastel', image: '🌈', title: 'Rainbow Pastel', description: 'Soft rainbow gradient' },
+            { category: 'premium', image: '👑', title: 'Royal Gold', description: 'Luxurious gold and black' },
+            { category: 'simple', image: '🌿', title: 'Natural Green', description: 'Simple leaf pattern' },
+            { category: 'cute', image: '🍓', title: 'Strawberry Sweet', description: 'Sweet strawberry design' }
+        ];
+
+        // Sample testimonials
+        const sampleTestimonials = [
+            { name: 'Sarah M.', rating: 5, text: 'Pelayanan luar biasa! Nail art nya sangat detail dan cantik. Pasti akan kembali lagi!' },
+            { name: 'Lisa K.', rating: 5, text: 'Staff nya ramah dan profesional. Hasil manicure nya awet dan rapi. Recommended!' },
+            { name: 'Maya R.', rating: 5, text: 'Tempatnya bersih dan nyaman. Desain nail art sesuai request dan hasilnya memuaskan.' }
+        ];
+
+        // Data SDK Handler
+        const dataHandler = {
+            onDataChanged(data) {
+                currentRecordCount = data.length;
+                
+                // Update testimonials with real data
+                const testimonialData = data.filter(item => item.type === 'testimonial');
+                if (testimonialData.length > 0) {
+                    renderTestimonials(testimonialData);
+                } else {
+                    renderTestimonials(sampleTestimonials.map((t, i) => ({
+                        ...t,
+                        id: `sample-${i}`,
+                        type: 'testimonial'
+                    })));
+                }
+            }
+        };
+
+        // Initialize SDKs
+        async function initializeApp() {
+            // Initialize Data SDK
+            if (window.dataSdk) {
+                const initResult = await window.dataSdk.init(dataHandler);
+                if (!initResult.isOk) {
+                    console.error("Failed to initialize data SDK");
+                }
+            }
+
+            // Initialize Element SDK
+            if (window.elementSdk) {
+                await window.elementSdk.init({
+                    defaultConfig,
+                    onConfigChange: async (config) => {
+                        // Update salon name
+                        const salonName = config.salon_name || defaultConfig.salon_name;
+                        document.getElementById('nav-salon-name').textContent = salonName;
+                        document.getElementById('footer-salon-name').textContent = salonName;
+                        document.getElementById('footer-copyright-name').textContent = salonName;
+
+                        // Update hero content
+                        document.getElementById('hero-title').textContent = config.hero_title || defaultConfig.hero_title;
+                        document.getElementById('hero-subtitle').textContent = config.hero_subtitle || defaultConfig.hero_subtitle;
+
+                        // Update contact info
+                        document.getElementById('contact-address').textContent = config.salon_address || defaultConfig.salon_address;
+                        document.getElementById('contact-phone').textContent = config.salon_phone || defaultConfig.salon_phone;
+                        document.getElementById('contact-email').textContent = config.salon_email || defaultConfig.salon_email;
+                        document.getElementById('footer-address').textContent = config.salon_address || defaultConfig.salon_address;
+                        document.getElementById('footer-phone').textContent = config.salon_phone || defaultConfig.salon_phone;
+                        document.getElementById('footer-email').textContent = config.salon_email || defaultConfig.salon_email;
+
+                        // Update colors
+                        const root = document.documentElement;
+                        if (config.background_color) {
+                            document.querySelector('.gradient-bg').style.background = `linear-gradient(135deg, ${config.background_color} 0%, ${config.primary_action_color || defaultConfig.primary_action_color} 100%)`;
+                        }
+                    },
+                    mapToCapabilities: (config) => ({
+                        recolorables: [
+                            {
+                                get: () => config.background_color || defaultConfig.background_color,
+                                set: (value) => {
+                                    if (window.elementSdk) {
+                                        window.elementSdk.setConfig({ background_color: value });
+                                    }
+                                }
+                            },
+                            {
+                                get: () => config.surface_color || defaultConfig.surface_color,
+                                set: (value) => {
+                                    if (window.elementSdk) {
+                                        window.elementSdk.setConfig({ surface_color: value });
+                                    }
+                                }
+                            },
+                            {
+                                get: () => config.text_color || defaultConfig.text_color,
+                                set: (value) => {
+                                    if (window.elementSdk) {
+                                        window.elementSdk.setConfig({ text_color: value });
+                                    }
+                                }
+                            },
+                            {
+                                get: () => config.primary_action_color || defaultConfig.primary_action_color,
+                                set: (value) => {
+                                    if (window.elementSdk) {
+                                        window.elementSdk.setConfig({ primary_action_color: value });
+                                    }
+                                }
+                            },
+                            {
+                                get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+                                set: (value) => {
+                                    if (window.elementSdk) {
+                                        window.elementSdk.setConfig({ secondary_action_color: value });
+                                    }
+                                }
+                            }
+                        ],
+                        borderables: [],
+                        fontEditable: undefined,
+                        fontSizeable: undefined
+                    }),
+                    mapToEditPanelValues: (config) => new Map([
+                        ["salon_name", config.salon_name || defaultConfig.salon_name],
+                        ["hero_title", config.hero_title || defaultConfig.hero_title],
+                        ["hero_subtitle", config.hero_subtitle || defaultConfig.hero_subtitle],
+                        ["salon_address", config.salon_address || defaultConfig.salon_address],
+                        ["salon_phone", config.salon_phone || defaultConfig.salon_phone],
+                        ["salon_email", config.salon_email || defaultConfig.salon_email]
+                    ])
+                });
+            }
+
+            // Initialize other features
+            initializeGallery();
+            initializeEventListeners();
+            initializeLanguage();
+            initializeDarkMode();
+            animateCounters();
+        }
+
+        // Initialize gallery
+        function initializeGallery() {
+            renderGallery('all');
+        }
+
+        // Render gallery
+        function renderGallery(filter) {
+            const container = document.getElementById('gallery-grid');
+            const filteredData = filter === 'all' ? galleryData : galleryData.filter(item => item.category === filter);
+            
+            container.innerHTML = filteredData.map(item => `
+                <div class="gallery-item bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-all hover:shadow-xl hover:scale-105">
+                    <div class="h-48 bg-gradient-to-br from-pink-100 to-purple-100 dark:from-pink-900 dark:to-purple-900 flex items-center justify-center text-6xl">
+                        ${item.image}
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">${item.title}</h3>
+                        <p class="text-gray-600 dark:text-gray-300">${item.description}</p>
+                        <div class="mt-4 flex justify-between items-center">
+                            <span class="bg-pink-100 dark:bg-pink-900 text-pink-800 dark:text-pink-200 px-3 py-1 rounded-full text-sm font-medium">${item.category}</span>
+                            <button class="text-pink-500 hover:text-pink-600 transition-colors">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter gallery
+        function filterGallery(category) {
+            // Update active filter button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-pink-500', 'text-white');
+                btn.classList.add('bg-pink-100', 'dark:bg-pink-800', 'text-pink-700', 'dark:text-pink-200');
+            });
+            
+            event.target.classList.add('active', 'bg-pink-500', 'text-white');
+            event.target.classList.remove('bg-pink-100', 'dark:bg-pink-800', 'text-pink-700', 'dark:text-pink-200');
+            
+            renderGallery(category);
+        }
+
+        // Render testimonials
+        function renderTestimonials(testimonials) {
+            const container = document.getElementById('testimonials-container');
+            container.innerHTML = testimonials.slice(0, 3).map(testimonial => `
+                <div class="testimonial-card bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-pink-400 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                            ${testimonial.name ? testimonial.name.charAt(0) : 'A'}
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-semibold text-gray-900 dark:text-white">${testimonial.name || 'Anonymous'}</h4>
+                            <div class="flex text-yellow-400">
+                                ${'★'.repeat(testimonial.rating || 5)}
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 italic">"${testimonial.text || testimonial.message || 'Great service!'}"</p>
+                </div>
+            `).join('');
+        }
+
+        // Initialize event listeners
+        function initializeEventListeners() {
+            // Mobile menu toggle
+            document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+                const mobileMenu = document.getElementById('mobile-menu');
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Language switcher
+            document.getElementById('language-switcher').addEventListener('change', (e) => {
+                currentLanguage = e.target.value;
+                updateLanguage();
+            });
+
+            // Dark mode toggle
+            document.getElementById('dark-mode-toggle').addEventListener('click', toggleDarkMode);
+
+            // Booking form
+            document.getElementById('booking-form').addEventListener('submit', handleBookingSubmit);
+
+            // Chat functionality
+            document.getElementById('chat-toggle').addEventListener('click', toggleChat);
+            document.getElementById('chat-send').addEventListener('click', sendChatMessage);
+            document.getElementById('chat-input').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    sendChatMessage();
+                }
+            });
+
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Navbar scroll effect
+            window.addEventListener('scroll', () => {
+                const navbar = document.getElementById('navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('bg-black/80');
+                } else {
+                    navbar.classList.remove('bg-black/80');
+                }
+            });
+        }
+
+        // Handle booking form submission
+        async function handleBookingSubmit(e) {
+            e.preventDefault();
+            
+            if (currentRecordCount >= 999) {
+                showNotification(getTranslation('booking-error') + ' Maximum limit reached.', 'error');
+                return;
+            }
+
+            showLoading(true);
+
+            const formData = {
+                id: Date.now().toString(),
+                type: 'booking',
+                name: document.getElementById('booking-name').value,
+                email: document.getElementById('booking-email').value,
+                phone: document.getElementById('booking-phone').value,
+                service: document.getElementById('booking-service').value,
+                date: document.getElementById('booking-date').value,
+                time: document.getElementById('booking-time').value,
+                message: document.getElementById('booking-message').value,
+                createdAt: new Date().toISOString()
+            };
+
+            if (window.dataSdk) {
+                const result = await window.dataSdk.create(formData);
+                
+                showLoading(false);
+                
+                if (result.isOk) {
+                    showNotification(getTranslation('booking-success'), 'success');
+                    document.getElementById('booking-form').reset();
+                } else {
+                    showNotification(getTranslation('booking-error'), 'error');
+                }
+            } else {
+                showLoading(false);
+                showNotification(getTranslation('booking-success'), 'success');
+                document.getElementById('booking-form').reset();
+            }
+        }
+
+        // Chat functionality
+        function toggleChat() {
+            const chatWindow = document.getElementById('chat-window');
+            chatWindow.classList.toggle('hidden');
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            
+            if (message) {
+                addChatMessage(message, 'user');
+                input.value = '';
+                
+                // Simulate bot response
+                setTimeout(() => {
+                    const responses = [
+                        'Terima kasih atas pertanyaannya! Tim kami akan segera membantu Anda.',
+                        'Untuk informasi lebih lanjut tentang layanan kami, silakan hubungi nomor yang tertera.',
+                        'Apakah Anda ingin membuat reservasi? Silakan isi form booking yang tersedia.'
+                    ];
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    addChatMessage(randomResponse, 'bot');
+                }, 1000);
+            }
+        }
+
+        function addChatMessage(message, sender) {
+            const messagesContainer = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `mb-3 ${sender === 'user' ? 'text-right' : ''}`;
+            
+            messageDiv.innerHTML = `
+                <div class="${sender === 'user' ? 'bg-pink-500 text-white ml-8' : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 mr-8'} p-3 rounded-lg inline-block">
+                    <p class="text-sm">${message}</p>
+                </div>
+            `;
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Language functionality
+        function initializeLanguage() {
+            updateLanguage();
+        }
+
+        function updateLanguage() {
+            document.querySelectorAll('[data-lang-key]').forEach(element => {
+                const key = element.getAttribute('data-lang-key');
+                const translation = getTranslation(key);
+                if (translation) {
+                    if (element.tagName === 'INPUT' && element.type !== 'submit') {
+                        element.placeholder = translation;
+                    } else {
+                        element.textContent = translation;
+                    }
+                }
+            });
+        }
+
+        function getTranslation(key) {
+            return translations[currentLanguage]?.[key] || translations['id'][key] || key;
+        }
+
+        // Dark mode functionality
+        function initializeDarkMode() {
+            const isDark = localStorage.getItem('darkMode') === 'true';
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+                document.getElementById('dark-mode-icon').className = 'fas fa-sun';
+            }
+        }
+
+        function toggleDarkMode() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', isDark);
+            document.getElementById('dark-mode-icon').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+        }
+
+        // Utility functions
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        function showLoading(show) {
+            const overlay = document.getElementById('loading-overlay');
+            if (show) {
+                overlay.classList.remove('hidden');
+            } else {
+                overlay.classList.add('hidden');
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `fixed top-20 right-4 z-50 p-4 rounded-lg shadow-lg transition-all transform translate-x-full ${
+                type === 'success' ? 'bg-green-500 text-white' : 
+                type === 'error' ? 'bg-red-500 text-white' : 
+                'bg-blue-500 text-white'
+            }`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full');
+            }, 100);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        function animateCounters() {
+            const counters = [
+                { element: document.getElementById('counter-clients'), target: 500 },
+                { element: document.getElementById('counter-designs'), target: 1000 },
+                { element: document.getElementById('counter-experience'), target: 5 }
+            ];
+
+            counters.forEach(counter => {
+                let current = 0;
+                const increment = counter.target / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= counter.target) {
+                        current = counter.target;
+                        clearInterval(timer);
+                    }
+                    counter.element.textContent = Math.floor(current) + '+';
+                }, 50);
+            });
+        }
+
+        // Initialize app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initializeApp);
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99f3e93455800ddc',t:'MTc2MzI2MzgzOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
